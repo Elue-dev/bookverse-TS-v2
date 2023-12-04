@@ -2,8 +2,11 @@ import { ConsumeMessage, Message } from "amqplib";
 import { passwordResetEmail } from "../email_templates/forgot.password.email";
 import sendEmail from "../services/email_service";
 import { establishRabbitConnection } from "./connect";
+import parser from "ua-parser-js";
+import { Request } from "express";
+import { resetSuccess } from "../email_templates/reset.password.email";
 
-export async function consumeFromRabbitMQAndSendFPasswordEmail(
+export async function consumeFromRabbitMQAndSendRPasswordEmail(
   queueName: string
 ) {
   const channel = await establishRabbitConnection();
@@ -23,14 +26,13 @@ export async function consumeFromRabbitMQAndSendFPasswordEmail(
         token = queueMessage?.content.toString().split(",")[3];
         console.log({ token, userEmail, username, userId });
       }
-      const subject = "Password reset request";
-      const send_to = userEmail as string;
+
+      const subject = `${username}, Your password was successfully reset`;
+      const send_to = userEmail!;
       const SENT_FROM = process.env.EMAIL_USER as string;
       const REPLY_TO = process.env.REPLY_TO as string;
-
-      const body = passwordResetEmail({
-        username: username!,
-        url: `${process.env.CLIENT_URL}/reset-password/${token}/${userId}`,
+      const body = resetSuccess({
+        username: username,
       });
 
       try {
@@ -40,7 +42,8 @@ export async function consumeFromRabbitMQAndSendFPasswordEmail(
           Buffer.from(
             JSON.stringify({
               success: true,
-              message: "Password reset email has been successfully sent",
+              message:
+                "Password reset success email has been successfully sent",
               data: [],
             })
           )
@@ -52,7 +55,7 @@ export async function consumeFromRabbitMQAndSendFPasswordEmail(
           Buffer.from(
             JSON.stringify({
               success: false,
-              message: "Could not send password reset email",
+              message: "Could not send password reset success email",
               data: [],
             })
           )
