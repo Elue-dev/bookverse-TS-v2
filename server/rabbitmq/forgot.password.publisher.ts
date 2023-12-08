@@ -27,6 +27,7 @@ export async function consumeFromRabbitMQAndSendFPasswordEmail(
       const send_to = userEmail as string;
       const SENT_FROM = process.env.EMAIL_USER as string;
       const REPLY_TO = process.env.REPLY_TO as string;
+      console.log({ CLEINT: process.env.CLIENT_URL });
 
       const body = passwordResetEmail({
         username: username!,
