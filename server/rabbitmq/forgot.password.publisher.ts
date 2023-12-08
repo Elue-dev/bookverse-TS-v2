@@ -30,7 +30,7 @@ export async function consumeFromRabbitMQAndSendFPasswordEmail(
 
       const body = passwordResetEmail({
         username: username!,
-        url: `${process.env.CLIENT_URL}/reset-password/${token}/${userId}`,
+        url: `${process.env.CLIENT_URL}/auth/reset-password/${token}/${userId}`,
       });
 
       try {

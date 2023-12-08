@@ -20,5 +20,5 @@ app.listen(PORT, function () {
   console.log(`Nodejs server listening on port ${PORT}`);
   consumeFromRabbitMQAndSendWelcomeEmail("WELCOME_USER_QUEUE");
   consumeFromRabbitMQAndSendFPasswordEmail("FORGOT_PASSWORD_QUEUE");
-  consumeFromRabbitMQAndSendRPasswordEmail("RESET_PASSWORD_QUEUE");
+  consumeFromRabbitMQAndSendRPasswordEmail("RESET_PWORD_QUEUE");
 });
