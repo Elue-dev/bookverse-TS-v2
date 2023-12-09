@@ -1,6 +1,5 @@
-import { ConsumeMessage, Message } from "amqplib";
 import sendEmail from "../services/email_service";
-import { establishRabbitConnection } from "./connect";
+import { establishRabbitConnection } from "./establish.connection";
 import {
   EmailOptions,
   QueueMessage,

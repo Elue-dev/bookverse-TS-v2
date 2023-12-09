@@ -1,6 +1,5 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
-import { consumeFromRabbitMQAndSendRPasswordEmail } from "./rabbitmq/reset.password.publisher";
 import { consumeFromRabbitMQAndSendEmail } from "./rabbitmq/email.publisher";
 
 dotenv.config();
