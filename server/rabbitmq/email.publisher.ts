@@ -65,6 +65,12 @@ export async function consumeFromRabbitMQAndSendEmail(queueName: string) {
       }
 
       channel.ack(queueMessage);
+    } else {
+      sendErrorResponse({
+        channel,
+        queueName,
+        consumerTag: undefined,
+      });
     }
   });
 }
