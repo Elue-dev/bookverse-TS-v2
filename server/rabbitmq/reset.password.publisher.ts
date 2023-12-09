@@ -27,16 +27,16 @@ export async function consumeFromRabbitMQAndSendRPasswordEmail(
         console.log({ token, userEmail, username, userId });
       }
 
-      const subject = `${username}, Your password was successfully reset`;
-      const send_to = userEmail!;
+      const SUBJECT = `${username}, Your password was successfully reset`;
+      const SEND_TO = userEmail!;
       const SENT_FROM = process.env.EMAIL_USER as string;
       const REPLY_TO = process.env.REPLY_TO as string;
-      const body = resetSuccess({
-        username: username,
+      const BODY = resetSuccess({
+        username,
       });
 
       try {
-        sendEmail({ subject, body, send_to, SENT_FROM, REPLY_TO });
+        sendEmail({ SUBJECT, BODY, SEND_TO, SENT_FROM, REPLY_TO });
         channel.sendToQueue(
           queueName,
           Buffer.from(
